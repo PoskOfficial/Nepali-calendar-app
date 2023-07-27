@@ -10,13 +10,90 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const MainScreenDrawer(),
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
+        title: Image.asset('assets/logo.png', height: 40,),
+        centerTitle: true,
+      ),
       backgroundColor: kBackgroundColor,
-      body: SafeArea(
+      body: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CalendarComponent(),
+        ],
+      ),
+    );
+  }
+}
+
+class MainScreenDrawer extends StatelessWidget {
+  const MainScreenDrawer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Container(
+        decoration: BoxDecoration(
+          color: kPrimaryColor,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CalendarComponent(),
+            const SizedBox(
+              height: 25,
+            ),
+            // Logo Here
+            const Placeholder(
+              fallbackHeight: 200,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            DrawerCardWidget(
+              text: 'Home',
+              backgroundColor: kOuterCalendarBorder,
+            ),
+            DrawerCardWidget(
+              text: 'Events',
+            ),
+            DrawerCardWidget(
+              text: 'Date Converter',
+            ),
+            DrawerCardWidget(
+              text: 'About',
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerCardWidget extends StatelessWidget {
+  const DrawerCardWidget({
+    super.key,
+    this.onTap,
+    required this.text,
+    this.backgroundColor,
+  });
+  final String text;
+  final VoidCallback? onTap;
+  final Color? backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: backgroundColor ?? kCalendarBorderColor,
+        child: ListTile(
+          title: Text(
+            text,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
