@@ -10,11 +10,14 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MainScreenDrawer(),
+      drawer: MainScreenDrawer(),
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         foregroundColor: Colors.white,
-        title: Image.asset('assets/logo.png', height: 40,),
+        title: Image.asset(
+          'assets/logo.png',
+          height: 40,
+        ),
         centerTitle: true,
       ),
       backgroundColor: kBackgroundColor,
@@ -46,9 +49,7 @@ class MainScreenDrawer extends StatelessWidget {
               height: 25,
             ),
             // Logo Here
-            const Placeholder(
-              fallbackHeight: 200,
-            ),
+            Image.asset('assets/logo.png', fit: BoxFit.fitWidth,),
             const SizedBox(
               height: 20,
             ),
