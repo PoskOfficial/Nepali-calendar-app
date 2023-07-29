@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../commons/colors.dart';
 
-class DrawerCardWidget extends StatelessWidget {
+class DrawerCardWidget extends ConsumerWidget {
   const DrawerCardWidget({
     super.key,
     this.onTap,
@@ -14,7 +15,7 @@ class DrawerCardWidget extends StatelessWidget {
   final Color? backgroundColor;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: onTap,
       child: Card(

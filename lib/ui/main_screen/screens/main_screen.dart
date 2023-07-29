@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nepali_calendar/ui/commons/colors.dart';
 import 'package:nepali_calendar/ui/main_screen/components/calendar_component.dart';
 
 import '../components/main_screen_drawer.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
 
   static String mainScreenRoute = 'main';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       drawer: const MainScreenDrawer(),
       appBar: AppBar(
