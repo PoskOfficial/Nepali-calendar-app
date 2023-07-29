@@ -1,29 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:nepali_calendar/logic/helper/get_data.dart';
 import 'package:nepali_calendar/logic/service/parse_map_to_model.dart';
 import 'package:nepali_calendar/model/calendar_data_model/calendar_data_model.dart';
 import 'package:nepali_calendar/ui/commons/colors.dart';
+import 'package:nepali_calendar/ui/providers/calendar_provider.dart';
 
 import 'calendar_day_widget.dart';
 import 'dropdown_item.dart';
 
-class CalendarComponent extends ConsumerWidget {
+class CalendarComponent extends StatelessWidget {
   const CalendarComponent({super.key});
-
-  Future<List<CalendarDayWidget>> loadCalendarDays() async {
-    List<CalendarDayWidget> daysWidgets = [];
-    List<CalendarDataModel> modelList =
-        parseMapToModel(await getData(2080), 10);
-    modelList.map((element) => daysWidgets.add(CalendarDayWidget(
-          dayInAD: element.adDay!,
-          dayInBS: element.day!,
-        )));
-    return daysWidgets;
-  }
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(

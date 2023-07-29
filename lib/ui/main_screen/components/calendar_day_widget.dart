@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:nepali_calendar/ui/commons/colors.dart';
 
-class CalendarDayWidget extends ConsumerWidget {
+class CalendarDayWidget extends StatelessWidget {
   const CalendarDayWidget({
     super.key,
     this.emptyBox = false,
@@ -15,7 +15,7 @@ class CalendarDayWidget extends ConsumerWidget {
   final String dayInAD;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 3),
       decoration: BoxDecoration(

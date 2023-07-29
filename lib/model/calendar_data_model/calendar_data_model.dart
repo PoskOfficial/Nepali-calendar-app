@@ -1,4 +1,4 @@
-class CalendarDataModel {
+class CalendarDataModel{
   final String? year;
   final String? month;
   final String? day;

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../commons/colors.dart';
 import 'drawer_card_widget.dart';
 
-class MainScreenDrawer extends ConsumerWidget {
+class MainScreenDrawer extends StatelessWidget {
   const MainScreenDrawer({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
