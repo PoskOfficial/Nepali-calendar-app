@@ -23,7 +23,7 @@ class CalendarDayWidget extends StatelessWidget {
           bottom: BorderSide(color: kCalendarBorderColor),
           right: BorderSide(color: kCalendarBorderColor),
         ),
-        color: emptyBox ? kCalendarBorderColor : null,
+        color: emptyBox ? kCalendarBorderColor : kCalendarComponentColor,
       ),
       child: emptyBox
           ? const SizedBox()

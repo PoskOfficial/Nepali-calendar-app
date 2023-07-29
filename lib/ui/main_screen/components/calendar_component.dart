@@ -10,7 +10,6 @@ import 'dropdown_item.dart';
 class CalendarComponent extends StatelessWidget {
   CalendarComponent({super.key});
 
-  final List<Widget> daysWidgets = [];
   @override
   Widget build(BuildContext context) {
     var calendarProv = Provider.of<CalendarProvider>(context);
@@ -37,7 +36,7 @@ class CalendarComponent extends StatelessWidget {
                 child: Center(
                   child: DropdownButton(
                     dropdownColor: kBackgroundColor,
-                    value: 2075,
+                    value: calendarProv.year,
                     items: [
                       dropdownItem('2075', value: 2075),
                       dropdownItem('2076', value: 2076),
@@ -48,7 +47,11 @@ class CalendarComponent extends StatelessWidget {
                       dropdownItem('2081', value: 2081),
                       dropdownItem('2082', value: 2082),
                     ],
-                    onChanged: (val) {},
+                    onChanged: (val) {
+                      calendarProv.year = val!;
+                      calendarProv.refreshListOfModels(
+                          calendarProv.month, calendarProv.year);
+                    },
                   ),
                 ),
               ),
@@ -57,16 +60,27 @@ class CalendarComponent extends StatelessWidget {
                 flex: 3,
                 child: Center(
                   child: DropdownButton(
+                    value: calendarProv.month,
                     dropdownColor: kBackgroundColor,
                     items: [
-                      DropdownMenuItem(
-                        child: Text(
-                          'Shrawan',
-                          style: TextStyle(color: kForegroundColor),
-                        ),
-                      ),
+                      dropdownItem('Baisakh', value: 1),
+                      dropdownItem('Jestha', value: 2),
+                      dropdownItem('Ashad', value: 3),
+                      dropdownItem('Shrawan', value: 4),
+                      dropdownItem('Bhadra', value: 5),
+                      dropdownItem('Ashoj', value: 6),
+                      dropdownItem('Kartik', value: 7),
+                      dropdownItem('Mangsir', value: 8),
+                      dropdownItem('Poush', value: 9),
+                      dropdownItem('Magh', value: 10),
+                      dropdownItem('Falgun', value: 11),
+                      dropdownItem('Chaitra', value: 12),
                     ],
-                    onChanged: (val) {},
+                    onChanged: (val) {
+                      calendarProv.month = val!;
+                      calendarProv.refreshListOfModels(
+                          calendarProv.month, calendarProv.year);
+                    },
                   ),
                 ),
               ),
@@ -94,7 +108,7 @@ class CalendarComponent extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: kCalendarComponentColor,
+              color: kCalendarBorderColor,
               border: Border.all(
                 color: kOuterCalendarBorder,
                 width: 2,
@@ -103,8 +117,9 @@ class CalendarComponent extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(1.0),
             child: FutureBuilder<List<CalendarDataModel>>(
-                future: calendarProv.listOfModels(),
+                future: calendarProv.listOfModels,
                 builder: (context, snapshot) {
+                  final List<Widget> daysWidgets = [];
                   if (snapshot.connectionState == ConnectionState.done) {
                     for (int i = 0; i < snapshot.data![0].weekday!; i++) {
                       daysWidgets.add(const CalendarDayWidget(
@@ -113,7 +128,6 @@ class CalendarComponent extends StatelessWidget {
                     }
                     snapshot.data?.forEach(
                       (e) {
-                        print(e.weekday);
                         daysWidgets.add(
                           CalendarDayWidget(
                             dayInAD: e.adDay!,
@@ -122,13 +136,16 @@ class CalendarComponent extends StatelessWidget {
                         );
                       },
                     );
-                    if(snapshot.data![0].weekday!=6)
-                    {
-                    for (var i = 0; i < snapshot.data![snapshot.data!.length-1].weekday!; i++) {
-                      daysWidgets.add(const CalendarDayWidget(
-                        emptyBox: true,
-                      ));
-                    }
+                    if (snapshot.data![0].weekday != 6) {
+                      for (var i = 0;
+                          i <
+                              snapshot
+                                  .data![snapshot.data!.length - 1].weekday!;
+                          i++) {
+                        daysWidgets.add(const CalendarDayWidget(
+                          emptyBox: true,
+                        ));
+                      }
                     }
                     return GridView.count(
                       shrinkWrap: true,
