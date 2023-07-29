@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-
-import 'package:nepali_calendar/logic/helper/get_data.dart';
-import 'package:nepali_calendar/logic/service/parse_map_to_model.dart';
 import 'package:nepali_calendar/model/calendar_data_model/calendar_data_model.dart';
 import 'package:nepali_calendar/ui/commons/colors.dart';
 import 'package:nepali_calendar/ui/providers/calendar_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'calendar_day_widget.dart';
 import 'dropdown_item.dart';
 
 class CalendarComponent extends StatelessWidget {
-  const CalendarComponent({super.key});
+  CalendarComponent({super.key});
+
+  final List<Widget> daysWidgets = [];
   @override
   Widget build(BuildContext context) {
+    var calendarProv = Provider.of<CalendarProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -101,11 +102,42 @@ class CalendarComponent extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.all(1.0),
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 7,
-              children: [],
-            ),
+            child: FutureBuilder<List<CalendarDataModel>>(
+                future: calendarProv.listOfModels(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    for (int i = 0; i < snapshot.data![0].weekday!; i++) {
+                      daysWidgets.add(const CalendarDayWidget(
+                        emptyBox: true,
+                      ));
+                    }
+                    snapshot.data?.forEach(
+                      (e) {
+                        print(e.weekday);
+                        daysWidgets.add(
+                          CalendarDayWidget(
+                            dayInAD: e.adDay!,
+                            dayInBS: e.day!,
+                          ),
+                        );
+                      },
+                    );
+                    if(snapshot.data![0].weekday!=6)
+                    {
+                    for (var i = 0; i < snapshot.data![snapshot.data!.length-1].weekday!; i++) {
+                      daysWidgets.add(const CalendarDayWidget(
+                        emptyBox: true,
+                      ));
+                    }
+                    }
+                    return GridView.count(
+                      shrinkWrap: true,
+                      crossAxisCount: 7,
+                      children: daysWidgets,
+                    );
+                  }
+                  return CircularProgressIndicator();
+                }),
           ),
         ],
       ),

@@ -36,7 +36,7 @@ class CalendarDataModel{
       isToday: json['isToday'],
       tithi: json['tithi'],
       week: json['week'],
-      weekday: json['weekday'],
+      weekday: json['week_day'],
     );
   }
 }

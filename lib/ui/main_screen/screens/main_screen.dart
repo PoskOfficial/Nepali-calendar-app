@@ -24,7 +24,7 @@ class MainScreen extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: kBackgroundColor,
-      body: const Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CalendarComponent(),
