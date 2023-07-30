@@ -6,9 +6,8 @@ import 'package:nepali_calendar/model/calendar_data_model/calendar_data_model.da
 class CalendarProvider extends ChangeNotifier {
   List<CalendarDataModel> _listOfModels = [];
   int _year = 2080;
-  int _month = 1;
+  int _month = 4;
   bool isChanged = false;
-  String _monthInAd = '';
 
   Future<List<CalendarDataModel>> get listOfModels async {
     _listOfModels = parseMapToModel(await getData(_year), _month);
@@ -17,7 +16,6 @@ class CalendarProvider extends ChangeNotifier {
 
   int get year => _year;
   int get month => _month;
-  // String get monthInAd => _listOfModels[0].adMonth;
 
   set year(int year) {
     _year = year;
@@ -29,8 +27,8 @@ class CalendarProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void refreshListOfModels(int month, int year) async {
-    _listOfModels = parseMapToModel(await getData(year), month);
+  void refreshListOfModels() async {
+    _listOfModels = parseMapToModel(await getData(_year), _month);
     notifyListeners();
   }
 }
