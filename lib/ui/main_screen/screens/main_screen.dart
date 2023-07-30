@@ -24,11 +24,42 @@ class MainScreen extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: kBackgroundColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CalendarComponent(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 40,
+            ),
+            const CalendarComponent(),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              
+            ),
+            GestureDetector(
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                padding: const EdgeInsets.symmetric(vertical: 13),
+                width: double.infinity,
+                decoration: BoxDecoration(color: kButtonColor, 
+                borderRadius: BorderRadius.circular(10)
+                ),
+                child: Center(
+                    child: Text(
+                  'See All Events',
+                  style: TextStyle(
+                    color: kForegroundColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
+                )),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
