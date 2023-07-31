@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nepali_calendar">
+    package="io.bikram.miti">
    <application
-        android:label="nepali_calendar"
+        android:label="Miti Android"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

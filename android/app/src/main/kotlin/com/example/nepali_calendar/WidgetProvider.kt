@@ -1,4 +1,4 @@
-package com.example.nepali_calendar // your package name
+package io.bikram.miti // your package name
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
