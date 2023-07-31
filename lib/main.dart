@@ -1,66 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_calendar/logic/service/local_notification.dart';
+
+import 'package:nepali_calendar/ui/main_screen/screens/main_screen.dart';
+import 'package:nepali_calendar/ui/providers/calendar_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
+
+import 'logic/service/background_work.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher);
+  runApp(const CalendarApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CalendarApp extends StatefulWidget {
+  const CalendarApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  State<CalendarApp> createState() => _CalendarAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
+class _CalendarAppState extends State<CalendarApp> {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void initState() {
+    super.initState();
+    LocalNotificationService.initialize();
+    LocalNotificationService.display();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => CalendarProvider(),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      ],
+      child: MaterialApp(
+        routes: {
+          MainScreen.mainScreenRoute: (context) => const MainScreen(),
+        },
+        initialRoute: MainScreen.mainScreenRoute,
       ),
     );
   }
