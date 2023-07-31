@@ -1,4 +1,4 @@
-package com.example.nepali_calendar
+package io.bikram.miti
 
 import io.flutter.embedding.android.FlutterActivity
 
